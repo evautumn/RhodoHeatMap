@@ -1,0 +1,46 @@
+---
+title: "Heatmap"
+output: html_document
+date: "2023-10-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Here is a list of libraries to load. Some are used, some aren't. 
+```{r}
+library(ggplot2)
+library(viridis)
+library(dplyr)
+library(hrbrthemes)
+library(latticeExtra)
+library(tibble)
+library(colorBlindness)
+library(reshape2)
+```
+
+Upload the data
+```{r}
+a <- read.csv("RNonBinary.csv") 
+```
+
+We need to reorder the Conditions so that when they appear on the graph, they are not randomly listed but appear in the list below
+```{r}
+a$Condition <- factor(a$Condition, levels = c("pH3","pH9", "4C", "15C", "22C", "30C", "37C", "6%", "9%", "12%", "G", "N", "X" ) )
+```
+
+Here is the Heatmap for the data. 
+I used reddish-pink because it's the color of our colonies and because I read that contrasting brightness (a light color and a dark color) is best for people who are colorblind. 
+```{r}
+ggplot(a, aes(SPECIES, Condition, fill= Growth)) + 
+  geom_tile()+ #let's make it a heatmap 
+  scale_fill_gradient(low = "#FFFFFF",
+                    high = "#E57367",
+                    guide = "colorbar")+  #here's the colors that we used 
+  labs(title = "Heatmap of Strains", 
+       x = "Species", 
+       y = "Condition")+ #here's the x and y axis title 
+   theme(axis.text.x = element_text(angle = 45, hjust=1.0, vjust = 1), plot.title = element_text(hjust = 0.5), plot.margin = margin(10, 10, 10, 100)) #the x axis labels needed to be rotated 45 degrees, the title needed to be centered, and the margin needed to be moved over to as not cut off text 
+```
+
