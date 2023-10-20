@@ -44,3 +44,15 @@ ggplot(a, aes(SPECIES, Condition, fill= Growth)) +
    theme(axis.text.x = element_text(angle = 45, hjust=1.0, vjust = 1), plot.title = element_text(hjust = 0.5), plot.margin = margin(10, 10, 10, 100)) #the x axis labels needed to be rotated 45 degrees, the title needed to be centered, and the margin needed to be moved over to as not cut off text 
 ```
 
+```{r}
+ggplot(a, aes(Environment, Condition, fill= Growth)) + 
+  geom_tile()+ #let's make it a heatmap 
+  scale_fill_gradient(low = "#FFFFFF",
+                    high = "#E57367",
+                    guide = "colorbar")+  #here's the colors that we used 
+  labs(title = "Heatmap of Strains", 
+       x = "Environment", 
+       y = "Condition")+ #here's the x and y axis title 
+   theme(axis.text.x = element_text(angle = 45, hjust=1.0, vjust = 1), plot.title = element_text(hjust = 0.5), plot.margin = margin(10, 10, 10, 100)) #the x axis labels needed to be rotated 45 degrees, the title needed to be centered, and the margin needed to be moved over to as not cut off text 
+```
+
